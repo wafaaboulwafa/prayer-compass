@@ -1,5 +1,7 @@
 export default {
   googleAds: {
+    androidAppId: "ca-app-pub-xxxxxxxx~xxxxxxxx",
+    iosAppId: "ca-app-pub-xxxxxxxx~xxxxxxxx",
     adUnitId: "ca-app-pub-xxxxxxxxxxxxxxxx/xxxxxxxxxx",
     interstitialAdUnitId: "ca-app-pub-xxxxxxxxxxxxxxxx/xxxxxxxxxx",
   },

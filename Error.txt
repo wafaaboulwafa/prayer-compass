@@ -1,0 +1,11 @@
+The issue is because react-native-google-mobile-ads is not compatible with Expo. As per the official documentation:
+
+"This module contains custom native code which is NOT supported by Expo Go"
+
+More info here
+
+Another easy way to fix the problem is to execute a build with:
+
+npx expo run:android
+
+After that, you can use expo normally

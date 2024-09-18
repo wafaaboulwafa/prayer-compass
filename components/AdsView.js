@@ -9,26 +9,7 @@ import {
 } from "react-native-google-mobile-ads";
 import settings from "../constants/settings";
 
-const interstitial = InterstitialAd.createForAdRequest(
-  __DEV__
-    ? TestIds.INTERSTITIAL
-    : settings.googleAds.interstitialAdUnitIdadUnitId
-);
-
 const AdsView = () => {
-  useEffect(() => {
-    const unsubscribe = interstitial.addAdEventListener(
-      AdEventType.LOADED,
-      () => {
-        interstitial.show();
-      }
-    );
-
-    interstitial.load();
-
-    return unsubscribe;
-  }, []);
-
   return (
     <View style={styles.container}>
       <BannerAd
