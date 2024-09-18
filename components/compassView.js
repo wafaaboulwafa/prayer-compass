@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Text } from "react-native";
 import { Magnetometer } from "expo-sensors";
 import { calculateHeading } from "../utils/heading";
 import settings from "../constants/settings";
@@ -11,14 +11,16 @@ const CompassView = () => {
   const subscription = useRef(null);
   const headingAdjustment = useRef(0);
   const [heading, setHeading] = useState(0);
+  const [text, setText] = useState("");
 
-  const onCompass = (result) => {
+  const onCompass = async (result) => {
     try {
-      let northHeading = Math.atan2(result.y, result.x) * (180 / Math.PI);
-      if (northHeading < 0) northHeading += 360;
-      let meccaHeading = northHeading - headingAdjustment.current;
+      let { trueHeading: northHeading } = await Location.getHeadingAsync();
+      setHeading(northHeading);
+      let meccaHeading = headingAdjustment.current - northHeading;
       if (meccaHeading < 0) meccaHeading += 360;
-      setHeading(meccaHeading);
+      setText(northHeading + "," + meccaHeading);
+      setHeading(-1 * meccaHeading);
     } catch (e) {
       console.log(e);
     }
@@ -63,9 +65,10 @@ const CompassView = () => {
         source={image}
         style={[
           styles.compassImage,
-          { transform: [{ rotate: `${heading}deg` }] },
+          { transform: [{ rotate: `${-1 * heading}deg` }] },
         ]}
       />
+      <Text style={styles.text}>{text}</Text>
     </View>
   );
 };
@@ -82,6 +85,13 @@ const styles = StyleSheet.create({
   compassImage: {
     width: 250,
     height: 250,
+  },
+  text: {
+    position: "absolute",
+    top: 30,
+    left: 20,
+    color: "white",
+    zIndex: 1,
   },
 });
 
