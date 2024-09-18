@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Animated } from "react-native";
 import { Magnetometer } from "expo-sensors";
 
-const Compass = () => {
+const CompassView = () => {
   const [{ x, y, z }, setData] = useState({ x: 0, y: 0, z: 0 });
   const [subscription, setSubscription] = useState(null);
   const rotateValue = new Animated.Value(0);
@@ -105,4 +105,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Compass;
+export default CompassView;

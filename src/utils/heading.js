@@ -1,4 +1,4 @@
-function calculateBearing(lat1, lon1, lat2, lon2) {
+export const calculateBearing = (lat1, lon1, lat2, lon2) => {
   const toRadians = (degree) => degree * (Math.PI / 180);
   const toDegrees = (radian) => radian * (180 / Math.PI);
 
@@ -16,8 +16,9 @@ function calculateBearing(lat1, lon1, lat2, lon2) {
   bearing = (bearing + 360) % 360; // Normalize to 0-360
 
   return bearing;
-}
+};
 
+/*
 const lat1 = 39.099912; // Example: Kansas City
 const lon1 = -94.581213;
 const lat2 = 38.627089; // Example: St. Louis
@@ -25,3 +26,4 @@ const lon2 = -90.200203;
 
 const heading = calculateBearing(lat1, lon1, lat2, lon2);
 console.log(`Heading: ${heading}°`);
+*/

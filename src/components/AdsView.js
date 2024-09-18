@@ -7,17 +7,15 @@ import {
   InterstitialAd,
   AdEventType,
 } from "react-native-google-mobile-ads";
+import settings from "../constants/settings";
 
-const adUnitId = __DEV__
-  ? TestIds.BANNER
-  : "ca-app-pub-xxxxxxxxxxxxxxxx/xxxxxxxxxx";
-const interstitialAdUnitId = __DEV__
-  ? TestIds.INTERSTITIAL
-  : "ca-app-pub-xxxxxxxxxxxxxxxx/xxxxxxxxxx";
+const interstitial = InterstitialAd.createForAdRequest(
+  __DEV__
+    ? TestIds.INTERSTITIAL
+    : settings.googleAds.interstitialAdUnitIdadUnitId
+);
 
-const interstitial = InterstitialAd.createForAdRequest(interstitialAdUnitId);
-
-const AdComponent = () => {
+const AdsView = () => {
   useEffect(() => {
     const unsubscribe = interstitial.addAdEventListener(
       AdEventType.LOADED,
@@ -34,7 +32,7 @@ const AdComponent = () => {
   return (
     <View style={styles.container}>
       <BannerAd
-        unitId={adUnitId}
+        unitId={__DEV__ ? TestIds.BANNER : settings.googleAds.adUnitId}
         size={BannerAdSize.FULL_BANNER}
         requestOptions={{
           requestNonPersonalizedAdsOnly: true,
@@ -52,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AdComponent;
+export default AdsView;
