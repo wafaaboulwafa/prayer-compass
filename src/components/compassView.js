@@ -1,37 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Animated } from "react-native";
 import { Magnetometer } from "expo-sensors";
+import { calculateHeading } from "../utils/heading";
+import settings from "../constants/settings";
 
 const CompassView = () => {
-  const [{ x, y, z }, setData] = useState({ x: 0, y: 0, z: 0 });
-  const [subscription, setSubscription] = useState(null);
+  const subscription = useRef(null);
+  const headingAdjustment = useRef(0);
   const rotateValue = new Animated.Value(0);
 
-  const _subscribe = () => {
-    setSubscription(
-      Magnetometer.addListener((result) => {
-        setData(result);
-        let heading = Math.atan2(result.y, result.x) * (180 / Math.PI);
-        if (heading < 0) {
-          heading += 360;
-        }
-        Animated.timing(rotateValue, {
-          toValue: heading,
-          duration: 100,
-          useNativeDriver: false,
-        }).start();
-      })
-    );
-  };
-
-  const _unsubscribe = () => {
-    subscription && subscription.remove();
-    setSubscription(null);
+  const onCompass = (result) => {
+    setData(result);
+    let heading = Math.atan2(result.y, result.x) * (180 / Math.PI);
+    if (heading < 0) heading += 360;
+    heading += headingAdjustment.current;
+    Animated.timing(rotateValue, {
+      toValue: heading,
+      duration: 100,
+      useNativeDriver: false,
+    }).start();
   };
 
   useEffect(() => {
-    _subscribe();
-    return () => _unsubscribe();
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted")
+        throw "Permission to access location was denied";
+      let loc = await Location.getCurrentPositionAsync({});
+      headingAdjustment.current = calculateHeading(
+        loc.lat,
+        loc.lng,
+        settings.meccaLocation.lat,
+        settings.meccaLocation.lng
+      );
+
+      subscription.current = Magnetometer.addListener(onCompass);
+    })();
+    return () => {
+      if (subscription.current !== null) subscription.current.remove();
+    };
   }, []);
 
   const rotateStyle = {
@@ -45,20 +52,8 @@ const CompassView = () => {
     ],
   };
 
-  const getCardinalDirection = (heading) => {
-    const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
-    const index = Math.round(heading / 45) % 8;
-    return directions[index];
-  };
-
   return (
     <View style={styles.container}>
-      <Text style={styles.headingValue}>{`Heading: ${rotateValue._value.toFixed(
-        2
-      )}°`}</Text>
-      <Text
-        style={styles.cardinalDirection}
-      >{`Direction: ${getCardinalDirection(rotateValue._value)}`}</Text>
       <View style={styles.compassContainer}>
         <Animated.Image
           source={require("./assets/compass.png")}
@@ -75,16 +70,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f5f5f5",
-  },
-  headingValue: {
-    fontSize: 24,
-    marginBottom: 10,
-    color: "#333",
-  },
-  cardinalDirection: {
-    fontSize: 18,
-    marginBottom: 20,
-    color: "#555",
   },
   compassContainer: {
     width: 250,
