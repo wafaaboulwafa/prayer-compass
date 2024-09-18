@@ -36,10 +36,18 @@
         }
       ],
       [
-        "react-native-google-mobile-ads",
+        "expo-location",
         {
-          "androidAppId": "ca-app-pub-xxxxxxxx~xxxxxxxx",
-          "iosAppId": "ca-app-pub-xxxxxxxx~xxxxxxxx"
+          "locationWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location."
+        }
+      ],
+      [
+        "expo-sensors",
+        {
+          "permissions": [
+            "android.permission.ACCESS_FINE_LOCATION",
+            "android.permission.ACCESS_COARSE_LOCATION"
+          ]
         }
       ]
     ],

@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import { Magnetometer } from "expo-sensors";
 import { calculateHeading } from "../utils/heading";
 import settings from "../constants/settings";
 import * as Location from "expo-location";
+
+const image = require("../assets/arrow.png");
 
 const CompassView = () => {
   const subscription = useRef(null);
@@ -12,10 +14,11 @@ const CompassView = () => {
 
   const onCompass = (result) => {
     try {
-      let newHeading = Math.atan2(result.y, result.x) * (180 / Math.PI);
-      if (newHeading < 0) newHeading += 360;
-      newHeading += headingAdjustment.current;
-      setHeading(newHeading);
+      let northHeading = Math.atan2(result.y, result.x) * (180 / Math.PI);
+      if (northHeading < 0) northHeading += 360;
+      let meccaHeading = northHeading - headingAdjustment.current;
+      if (meccaHeading < 0) meccaHeading += 360;
+      setHeading(meccaHeading);
     } catch (e) {
       console.log(e);
     }
@@ -56,36 +59,29 @@ const CompassView = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.compassContainer}>
-        <Image
-          source={require("../assets/compass.png")}
-          style={[
-            styles.compassImage,
-            { transform: [{ rotate: `${heading}deg` }] },
-          ]}
-        />
-      </View>
+      <Image
+        source={image}
+        style={[
+          styles.compassImage,
+          { transform: [{ rotate: `${heading}deg` }] },
+        ]}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#000000",
-  },
-  compassContainer: {
-    width: 250,
-    height: 250,
+    width: "100%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#040404",
+    borderWidth: 3,
   },
   compassImage: {
-    width: 200,
-    height: 200,
+    width: 250,
+    height: 250,
   },
 });
 
