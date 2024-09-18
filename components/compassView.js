@@ -56,7 +56,7 @@ const CompassView = () => {
     <View style={styles.container}>
       <View style={styles.compassContainer}>
         <Animated.Image
-          source={require("./assets/compass.png")}
+          source={require("../assets/compass.png")}
           style={[styles.compassImage, rotateStyle]}
         />
       </View>

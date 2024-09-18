@@ -1,9 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import CompassView from "../components/compassView";
-import AdsView from "../components/AdsView";
+import CompassView from "./components/compassView";
+import AdsView from "./components/AdsView";
 
-export default function Home() {
+export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
