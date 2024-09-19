@@ -26,7 +26,7 @@ const CompassView = () => {
         style={styles.compassImage}
         heading={flipAngle(northHeading)}
       />
-      <Text style={styles.text}>{northHeading}</Text>
+      <Text style={styles.text}></Text>
     </View>
   );
 };
