@@ -25,12 +25,14 @@ export default function App() {
     setLoading(false);
   });
 
+  const showCompass = hasPermissions && !loading;
+
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
       {loading && <ActivityIndicator />}
-      {hasPermissions && !loading && <CompassView />}
-      {!hasPermissions && !loading && (
+      {showCompass && <CompassView />}
+      {!showCompass && (
         <Text style={styles.warning}>
           Please allow the required permissions to use the application
         </Text>

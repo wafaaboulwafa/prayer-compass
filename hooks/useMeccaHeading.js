@@ -7,7 +7,7 @@ import settings from "../constants/settings";
 const useMeccaHeading = () => {
   const subscription = useRef(null);
   const headingAdjustment = useRef(0);
-  const [heading, setHeading] = useState(0);
+  const [heading, setHeading] = useState({ northHeading: 0, meccaHeading: 0 });
   const lastExecTime = useRef(0);
   const onCompass = async (result) => {
     try {
@@ -19,7 +19,13 @@ const useMeccaHeading = () => {
         new Date().getTime() - lastExecTime.current >
         settings.animation.compassUpdateDelay
       ) {
-        setHeading({ northHeading, meccaHeading });
+        if (
+          northHeading >= 0 &&
+          northHeading <= 360 &&
+          meccaHeading >= 0 &&
+          meccaHeading <= 360
+        )
+          setHeading({ northHeading, meccaHeading });
         lastExecTime.current = new Date().getTime();
       }
     } catch (e) {

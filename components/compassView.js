@@ -2,22 +2,41 @@ import React, { useEffect, useRef } from "react";
 import { View, StyleSheet, Text, Animated } from "react-native";
 import settings from "../constants/settings";
 import useMeccaHeading from "../hooks/useMeccaHeading";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
-const image = require("../assets/arrow.png");
+const arrowImage = require("../assets/meccah-arrow.png");
+const compassImage = require("../assets/compass.png");
+
+const flipAngle = (value) => (value && value > 0 ? Math.round(360 - value) : 0);
 
 const CompassView = () => {
   const { northHeading, meccaHeading } = useMeccaHeading();
-  const rotateValue = useRef(new Animated.Value(0)).current;
+  const arrowRotateValue = useRef(new Animated.Value(0)).current;
+  const compassRotateValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    Animated.timing(rotateValue, {
+    Animated.timing(arrowRotateValue, {
       toValue: meccaHeading,
       duration: settings.animation.animationDelay,
       useNativeDriver: true,
     }).start();
-  }, [meccaHeading]);
 
-  const rotate = rotateValue.interpolate({
+    Animated.timing(compassRotateValue, {
+      toValue: flipAngle(northHeading),
+      duration: settings.animation.animationDelay,
+      useNativeDriver: true,
+    }).start();
+  }, [meccaHeading, northHeading]);
+
+  const rotateArrow = arrowRotateValue.interpolate({
+    inputRange: [0, 360],
+    outputRange: ["0deg", "360deg"],
+  });
+
+  const rotateCompass = compassRotateValue.interpolate({
     inputRange: [0, 360],
     outputRange: ["0deg", "360deg"],
   });
@@ -25,13 +44,28 @@ const CompassView = () => {
   return (
     <View style={styles.container}>
       <Animated.Image
-        source={image}
-        style={[styles.compassImage, { transform: [{ rotate }] }]}
+        source={arrowImage}
+        style={[styles.arrowImage, { transform: [{ rotate: rotateArrow }] }]}
+      />
+      <Animated.Image
+        source={compassImage}
+        style={[
+          styles.compassImage,
+          { transform: [{ rotate: rotateCompass }] },
+        ]}
       />
       <Text style={styles.text}>{Math.round(northHeading)}</Text>
     </View>
   );
 };
+
+const screenWidth = Math.round(wp(100));
+const screenHeight = Math.round(hp(100));
+
+const smallestSize = Math.min(screenWidth, screenHeight);
+
+const compassWidth = Math.round(smallestSize * 0.5);
+const arrowWidth = Math.round(smallestSize * 1);
 
 const styles = StyleSheet.create({
   container: {
@@ -39,18 +73,30 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#040404",
+    backgroundColor: "#ffffff",
     borderWidth: 3,
   },
   compassImage: {
-    width: 250,
-    height: 250,
+    resizeMode: "contain",
+    position: "absolute",
+    width: compassWidth,
+    height: compassWidth,
+    left: Math.round(screenWidth / 2 - compassWidth / 2),
+    top: Math.round(screenHeight / 2 - compassWidth / 2),
+  },
+  arrowImage: {
+    resizeMode: "contain",
+    position: "absolute",
+    width: arrowWidth,
+    height: arrowWidth,
+    left: Math.round(screenWidth / 2 - arrowWidth / 2),
+    top: Math.round(screenHeight / 2 - arrowWidth / 2),
   },
   text: {
     position: "absolute",
     top: 30,
     left: 20,
-    color: "white",
+    color: "#050505",
     zIndex: 1,
   },
 });
