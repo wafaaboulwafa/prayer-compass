@@ -1,59 +1,32 @@
-import React, { useEffect, useRef } from "react";
-import { View, StyleSheet, Text, Animated } from "react-native";
-import settings from "../constants/settings";
+import React from "react";
+import { View, StyleSheet, Text } from "react-native";
 import useMeccaHeading from "../hooks/useMeccaHeading";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { flipAngle, safeAngleValue } from "../utils/heading";
+import { RotatingImage, RotatingImageNoAnimation } from "./rotatingImage";
+import { flipAngle } from "../utils/heading";
 
 const arrowImage = require("../assets/meccah-arrow.png");
 const compassImage = require("../assets/compass.png");
 
 const CompassView = () => {
   const { northHeading, meccaHeading } = useMeccaHeading();
-  const arrowRotateValue = useRef(new Animated.Value(0)).current;
-  const compassRotateValue = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.timing(arrowRotateValue, {
-      toValue: safeAngleValue(meccaHeading),
-      duration: settings.animation.animationDelay,
-      useNativeDriver: true,
-    }).start();
-
-    Animated.timing(compassRotateValue, {
-      toValue: safeAngleValue(flipAngle(northHeading)),
-      duration: settings.animation.animationDelay,
-      useNativeDriver: true,
-    }).start();
-  }, [meccaHeading, northHeading]);
-
-  const rotateArrow = arrowRotateValue.interpolate({
-    inputRange: [0, 360],
-    outputRange: ["0deg", "360deg"],
-  });
-
-  const rotateCompass = compassRotateValue.interpolate({
-    inputRange: [0, 360],
-    outputRange: ["0deg", "360deg"],
-  });
 
   return (
     <View style={styles.container}>
-      <Animated.Image
+      <RotatingImage
         source={arrowImage}
-        style={[styles.arrowImage, { transform: [{ rotate: rotateArrow }] }]}
+        style={styles.arrowImage}
+        heading={meccaHeading}
       />
-      <Animated.Image
+      <RotatingImage
         source={compassImage}
-        style={[
-          styles.compassImage,
-          { transform: [{ rotate: rotateCompass }] },
-        ]}
+        style={styles.compassImage}
+        heading={flipAngle(northHeading)}
       />
-      <Text style={styles.text}></Text>
+      <Text style={styles.text}>{northHeading}</Text>
     </View>
   );
 };
