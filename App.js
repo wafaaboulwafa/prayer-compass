@@ -7,12 +7,6 @@ import { grantPermissions } from "./utils/permissions";
 import mobileAds from "react-native-google-mobile-ads";
 import BannerView from "./components/bannerView";
 
-mobileAds()
-  .initialize()
-  .then((adapterStatuses) => {
-    // Initialization complete!
-  });
-
 export default function App() {
   const [hasPermissions, setHasPermissions] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -20,12 +14,11 @@ export default function App() {
   useEffect(() => {
     (async () => {
       setHasPermissions(await grantPermissions());
+      await mobileAds().initialize();
       setLoading(false);
     })();
   });
-
   const showCompass = hasPermissions && !loading;
-
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
@@ -38,9 +31,11 @@ export default function App() {
         )}
         {loading && <ActivityIndicator size={"large"} color={"black"} />}
       </View>
-      <View style={styles.adsContainer}>
-        <BannerView />
-      </View>
+      {showCompass && (
+        <View style={styles.adsContainer}>
+          <BannerView />
+        </View>
+      )}
     </View>
   );
 }
@@ -53,7 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   compassContainer: {
-    flex: 9,
+    flex: 10,
     alignContent: "center",
     justifyContent: "center",
   },
@@ -63,6 +58,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   adsContainer: {
-    flex: 3,
+    flex: 2,
   },
 });

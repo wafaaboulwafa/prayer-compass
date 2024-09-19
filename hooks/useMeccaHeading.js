@@ -12,7 +12,8 @@ const useMeccaHeading = () => {
   const onCompass = async (result) => {
     try {
       const locationData = await Location.getHeadingAsync();
-      const northHeading = locationData?.trueHeading || 0;
+      let northHeading = locationData?.trueHeading || 0;
+      if (isNaN(northHeading)) return;
       let meccaHeading = headingAdjustment.current - northHeading;
       if (meccaHeading < 0) meccaHeading += 360;
 
@@ -30,7 +31,7 @@ const useMeccaHeading = () => {
         lastExecTime.current = new Date().getTime();
       }
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     }
   };
 
@@ -48,7 +49,7 @@ const useMeccaHeading = () => {
         headingAdjustment.current = headAdjustment;
         subscription.current = Magnetometer.addListener(onCompass);
       } catch (e) {
-        console.log(e);
+        console.warn(e);
       }
     })();
     return () => {
