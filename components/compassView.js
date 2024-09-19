@@ -6,11 +6,10 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { flipAngle, safeAngleValue } from "../utils/heading";
 
 const arrowImage = require("../assets/meccah-arrow.png");
 const compassImage = require("../assets/compass.png");
-
-const flipAngle = (value) => (value && value > 0 ? Math.round(360 - value) : 0);
 
 const CompassView = () => {
   const { northHeading, meccaHeading } = useMeccaHeading();
@@ -19,13 +18,13 @@ const CompassView = () => {
 
   useEffect(() => {
     Animated.timing(arrowRotateValue, {
-      toValue: meccaHeading,
+      toValue: safeAngleValue(meccaHeading),
       duration: settings.animation.animationDelay,
       useNativeDriver: true,
     }).start();
 
     Animated.timing(compassRotateValue, {
-      toValue: flipAngle(northHeading),
+      toValue: safeAngleValue(flipAngle(northHeading)),
       duration: settings.animation.animationDelay,
       useNativeDriver: true,
     }).start();
@@ -54,7 +53,7 @@ const CompassView = () => {
           { transform: [{ rotate: rotateCompass }] },
         ]}
       />
-      <Text style={styles.text}>{Math.round(northHeading)}</Text>
+      <Text style={styles.text}></Text>
     </View>
   );
 };

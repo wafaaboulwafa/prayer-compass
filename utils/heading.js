@@ -23,3 +23,9 @@ export const getCardinalDirection = (heading) => {
   const index = Math.round(heading / 45) % 8;
   return directions[index];
 };
+
+export const flipAngle = (value) =>
+  value && value > 0 ? Math.round(360 - value) : 0;
+
+export const safeAngleValue = (value) =>
+  value && value >= 0 && value <= 360 ? value : 0;
