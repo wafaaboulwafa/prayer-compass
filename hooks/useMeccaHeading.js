@@ -11,7 +11,8 @@ const useMeccaHeading = () => {
   const lastExecTime = useRef(0);
   const onCompass = async (result) => {
     try {
-      let { trueHeading: northHeading } = await Location.getHeadingAsync();
+      const locationData = await Location.getHeadingAsync();
+      const northHeading = locationData?.trueHeading || 0;
       let meccaHeading = headingAdjustment.current - northHeading;
       if (meccaHeading < 0) meccaHeading += 360;
 
