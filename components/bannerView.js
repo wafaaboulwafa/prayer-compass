@@ -8,9 +8,7 @@ import {
 } from "react-native-google-mobile-ads";
 import settings from "../constants/settings";
 
-const adUnitId = __DEV__
-  ? TestIds.ADAPTIVE_BANNER
-  : settings.googleAds.adUnitId;
+const adUnitId = __DEV__ ? TestIds.ADAPTIVE_BANNER : settings.googleAds.unitId;
 
 const BannerView = () => {
   const bannerRef = useRef(null);
