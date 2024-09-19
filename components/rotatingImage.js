@@ -8,7 +8,7 @@ export const RotatingImage = ({ style, source, heading }) => {
 
   useEffect(() => {
     Animated.timing(rotateValue, {
-      toValue: safeAngleValue(heading),
+      toValue: safeAngleValue(Math.round(heading)),
       duration: settings.animation.animationDelay,
       useNativeDriver: true,
     }).start();
@@ -33,7 +33,9 @@ export const RotatingImageNoAnimation = ({ style, source, heading }) => {
       source={source}
       style={[
         style,
-        { transform: [{ rotate: safeAngleValue(heading) + "deg" }] },
+        {
+          transform: [{ rotate: safeAngleValue(Math.round(heading)) + "deg" }],
+        },
       ]}
     />
   );
