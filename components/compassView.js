@@ -16,12 +16,12 @@ const CompassView = () => {
 
   return (
     <View style={styles.container}>
-      <RotatingImage
+      <RotatingImageNoAnimation
         source={arrowImage}
         style={styles.arrowImage}
         heading={meccaHeading}
       />
-      <RotatingImage
+      <RotatingImageNoAnimation
         source={compassImage}
         style={styles.compassImage}
         heading={flipAngle(northHeading)}
