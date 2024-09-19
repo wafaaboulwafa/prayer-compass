@@ -49,6 +49,13 @@
             "android.permission.ACCESS_COARSE_LOCATION"
           ]
         }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-1620938030646614~1575623007",
+          "iosAppId": "ca-app-pub-1620938030646614~1575623007"
+        }
       ]
     ],
     "extra": {

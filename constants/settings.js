@@ -1,9 +1,6 @@
 export default {
   googleAds: {
-    androidAppId: "ca-app-pub-xxxxxxxx~xxxxxxxx",
-    iosAppId: "ca-app-pub-xxxxxxxx~xxxxxxxx",
-    adUnitId: "ca-app-pub-xxxxxxxxxxxxxxxx/xxxxxxxxxx",
-    interstitialAdUnitId: "ca-app-pub-xxxxxxxxxxxxxxxx/xxxxxxxxxx",
+    unitId: "ca-app-pub-1620938030646614/4458034690",
   },
   meccaLocation: {
     lat: 21.422503920387495,
