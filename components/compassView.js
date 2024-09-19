@@ -1,70 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Image, Text, Animated } from "react-native";
-import { Magnetometer } from "expo-sensors";
-import { calculateHeading } from "../utils/heading";
 import settings from "../constants/settings";
-import * as Location from "expo-location";
+import useMeccaHeading from "../hooks/useMeccaHeading";
 
 const image = require("../assets/arrow.png");
 
 const CompassView = () => {
-  const subscription = useRef(null);
-  const headingAdjustment = useRef(0);
-  const [heading, setHeading] = useState(0);
-  const [text, setText] = useState("");
-  const lastExecTime = useRef(0);
-  const onCompass = async (result) => {
-    try {
-      let { trueHeading: northHeading } = await Location.getHeadingAsync();
-      let meccaHeading = headingAdjustment.current - northHeading;
-      if (meccaHeading < 0) meccaHeading += 360;
-
-      if (
-        new Date().getTime() - lastExecTime.current >
-        settings.animation.compassUpdateDelay
-      ) {
-        setText(northHeading + "," + meccaHeading);
-        setHeading(-1 * meccaHeading);
-        lastExecTime.current = new Date().getTime();
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-
-        if (status !== "granted")
-          throw "Permission to access location was denied";
-
-        let { status: magnetoStatus } =
-          await Magnetometer.requestPermissionsAsync();
-
-        if (magnetoStatus !== "granted")
-          throw "Permission to access sensor was denied";
-
-        let loc = await Location.getCurrentPositionAsync({});
-        const headAdjustment = calculateHeading(
-          loc.coords.latitude,
-          loc.coords.longitude,
-          settings.meccaLocation.lat,
-          settings.meccaLocation.lng
-        );
-
-        headingAdjustment.current = headAdjustment;
-        subscription.current = Magnetometer.addListener(onCompass);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-    return () => {
-      if (subscription.current !== null) subscription.current.remove();
-    };
-  }, []);
-
+  const heading = useMeccaHeading();
   const rotateValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -86,7 +28,7 @@ const CompassView = () => {
         source={image}
         style={[styles.compassImage, { transform: [{ rotate }] }]}
       />
-      <Text style={styles.text}>{text}</Text>
+      <Text style={styles.text}></Text>
     </View>
   );
 };

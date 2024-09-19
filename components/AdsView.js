@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
-import {
-  BannerAd,
-  BannerAdSize,
-  TestIds,
-  InterstitialAd,
-  AdEventType,
-} from "react-native-google-mobile-ads";
+// import {
+//   BannerAd,
+//   BannerAdSize,
+//   TestIds,
+//   InterstitialAd,
+//   AdEventType,
+// } from "react-native-google-mobile-ads";
 import settings from "../constants/settings";
 
 const AdsView = () => {
