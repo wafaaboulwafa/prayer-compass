@@ -7,6 +7,7 @@ import settings from "./constants/settings";
 import "expo-dev-client";
 import { useEffect, useState } from "react";
 import { grantPermissions } from "./utils/permissions";
+import { useForegroundPermissions } from "expo-location";
 
 // initializeApp({
 //   androidAppId: settings.androidAppId,
@@ -20,9 +21,8 @@ export default function App() {
   useEffect(() => {
     (async () => {
       setHasPermissions(await grantPermissions());
+      setLoading(false);
     })();
-
-    setLoading(false);
   });
 
   const showCompass = hasPermissions && !loading;
@@ -30,13 +30,13 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
-      {loading && <ActivityIndicator />}
       {showCompass && <CompassView />}
-      {!showCompass && (
+      {!showCompass && !loading && (
         <Text style={styles.warning}>
           Please allow the required permissions to use the application
         </Text>
       )}
+      {loading && <ActivityIndicator size={"large"} color={"black"} />}
       {/* <AdsView /> */}
     </View>
   );
@@ -45,12 +45,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "white",
     alignContent: "center",
     justifyContent: "center",
   },
   warning: {
-    color: "white",
+    color: "black",
     padding: 50,
     textAlign: "center",
   },
