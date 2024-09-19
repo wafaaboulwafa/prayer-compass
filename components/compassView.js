@@ -1,21 +1,21 @@
-import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Image, Text, Animated } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { View, StyleSheet, Text, Animated } from "react-native";
 import settings from "../constants/settings";
 import useMeccaHeading from "../hooks/useMeccaHeading";
 
 const image = require("../assets/arrow.png");
 
 const CompassView = () => {
-  const heading = useMeccaHeading();
+  const { northHeading, meccaHeading } = useMeccaHeading();
   const rotateValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.timing(rotateValue, {
-      toValue: -1 * heading,
+      toValue: meccaHeading,
       duration: settings.animation.animationDelay,
       useNativeDriver: true,
     }).start();
-  }, [heading]);
+  }, [meccaHeading]);
 
   const rotate = rotateValue.interpolate({
     inputRange: [0, 360],
@@ -28,7 +28,7 @@ const CompassView = () => {
         source={image}
         style={[styles.compassImage, { transform: [{ rotate }] }]}
       />
-      <Text style={styles.text}></Text>
+      <Text style={styles.text}>{Math.round(northHeading)}</Text>
     </View>
   );
 };

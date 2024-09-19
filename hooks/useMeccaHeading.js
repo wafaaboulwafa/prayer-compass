@@ -19,7 +19,7 @@ const useMeccaHeading = () => {
         new Date().getTime() - lastExecTime.current >
         settings.animation.compassUpdateDelay
       ) {
-        setHeading(-1 * meccaHeading);
+        setHeading({ northHeading, meccaHeading });
         lastExecTime.current = new Date().getTime();
       }
     } catch (e) {
