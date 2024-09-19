@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
+import { View, StyleSheet, Image, Text, Animated } from "react-native";
 import { Magnetometer } from "expo-sensors";
 import { calculateHeading } from "../utils/heading";
 import settings from "../constants/settings";
@@ -12,15 +12,21 @@ const CompassView = () => {
   const headingAdjustment = useRef(0);
   const [heading, setHeading] = useState(0);
   const [text, setText] = useState("");
-
+  const lastExecTime = useRef(0);
   const onCompass = async (result) => {
     try {
       let { trueHeading: northHeading } = await Location.getHeadingAsync();
-      setHeading(northHeading);
       let meccaHeading = headingAdjustment.current - northHeading;
       if (meccaHeading < 0) meccaHeading += 360;
-      setText(northHeading + "," + meccaHeading);
-      setHeading(-1 * meccaHeading);
+
+      if (
+        new Date().getTime() - lastExecTime.current >
+        settings.animation.compassUpdateDelay
+      ) {
+        setText(northHeading + "," + meccaHeading);
+        setHeading(-1 * meccaHeading);
+        lastExecTime.current = new Date().getTime();
+      }
     } catch (e) {
       console.log(e);
     }
@@ -59,14 +65,26 @@ const CompassView = () => {
     };
   }, []);
 
+  const rotateValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(rotateValue, {
+      toValue: -1 * heading,
+      duration: settings.animation.animationDelay,
+      useNativeDriver: true,
+    }).start();
+  }, [heading]);
+
+  const rotate = rotateValue.interpolate({
+    inputRange: [0, 360],
+    outputRange: ["0deg", "360deg"],
+  });
+
   return (
     <View style={styles.container}>
-      <Image
+      <Animated.Image
         source={image}
-        style={[
-          styles.compassImage,
-          { transform: [{ rotate: `${-1 * heading}deg` }] },
-        ]}
+        style={[styles.compassImage, { transform: [{ rotate }] }]}
       />
       <Text style={styles.text}>{text}</Text>
     </View>
