@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Praying compass",
-    "slug": "muslims-praying-compass",
+    "name": "Prayer compass",
+    "slug": "prayer-compass",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,12 +16,16 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.wafaaboulwafa.muslimsprayingcompass",
+      "package": "com.wafaaboulwafa.prayercompass",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -60,7 +64,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "1208374c-e05f-4d09-8036-9aca41f7a82f"
+        "projectId": "deaacb20-bdc8-444f-b9f2-002fd5bcbeb2"
       }
     }
   }
