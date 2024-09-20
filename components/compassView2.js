@@ -4,7 +4,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Magnetometer } from "expo-sensors";
 import * as Location from "expo-location";
 import { calculateHeading, flipAngle, safeAngleValue } from "../utils/heading";
 import settings from "../constants/settings";
@@ -21,12 +20,11 @@ const CompassView2 = () => {
   const compassRef = useRef(null);
   const updatingRef = useRef(false);
 
-  const onCompass = async (result) => {
+  const onCompass = async (headingData) => {
     if (updatingRef.current === true) return;
     updatingRef.current = true;
     try {
-      const locationData = await Location.getHeadingAsync();
-      let northHeading = locationData?.trueHeading || 0;
+      let northHeading = headingData?.trueHeading || 0;
       if (isNaN(northHeading)) return;
       let meccaHeading = headingAdjustment.current - northHeading;
       if (meccaHeading < 0) meccaHeading += 360;
@@ -63,7 +61,7 @@ const CompassView2 = () => {
         );
 
         headingAdjustment.current = headAdjustment;
-        subscription.current = Magnetometer.addListener(onCompass);
+        subscription.current = await Location.watchHeadingAsync(onCompass);
       } catch (e) {
         console.warn(e);
       }
