@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import CompassView from "./components/compassView";
 import "expo-dev-client";
 import { useEffect, useState } from "react";
 import { grantPermissions } from "./utils/permissions";
 import mobileAds from "react-native-google-mobile-ads";
 import BannerView from "./components/bannerView";
+import CompassView2 from "./components/compassView2";
 
 export default function App() {
   const [hasPermissions, setHasPermissions] = useState(false);
@@ -23,7 +23,7 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="dark" />
       <View style={styles.compassContainer}>
-        {showCompass && <CompassView />}
+        {showCompass && <CompassView2 />}
         {!showCompass && !loading && (
           <Text style={styles.warning}>
             Please allow the required permissions to use the application
