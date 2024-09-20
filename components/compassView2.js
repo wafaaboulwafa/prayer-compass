@@ -6,7 +6,7 @@ import {
 } from "react-native-responsive-screen";
 import { Magnetometer } from "expo-sensors";
 import * as Location from "expo-location";
-import { calculateHeading, safeAngleValue } from "../utils/heading";
+import { calculateHeading, flipAngle, safeAngleValue } from "../utils/heading";
 import settings from "../constants/settings";
 
 const arrowImage = require("../assets/meccah-arrow.png");
@@ -19,8 +19,11 @@ const CompassView2 = () => {
 
   const arrowRef = useRef(null);
   const compassRef = useRef(null);
+  const updatingRef = useRef(false);
 
   const onCompass = async (result) => {
+    if (updatingRef.current === true) return;
+    updatingRef.current = true;
     try {
       const locationData = await Location.getHeadingAsync();
       let northHeading = locationData?.trueHeading || 0;
@@ -43,6 +46,8 @@ const CompassView2 = () => {
       }
     } catch (e) {
       console.warn(e);
+    } finally {
+      updatingRef.current = false;
     }
   };
 
@@ -79,7 +84,9 @@ const CompassView2 = () => {
     compassRef.current.setNativeProps({
       style: {
         transform: [
-          { rotate: safeAngleValue(Math.round(northHeading)) + "deg" },
+          {
+            rotate: safeAngleValue(flipAngle(Math.round(northHeading))) + "deg",
+          },
         ],
       },
     });
