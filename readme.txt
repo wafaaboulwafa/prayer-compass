@@ -2,6 +2,7 @@ eas build
 npx expo run:android
 eas build -p android --profile preview
 eas build -p android --profile production
+eas submit --platform android 
 
 adb tcpip 5555
 adb connect <ip_address>:5555
