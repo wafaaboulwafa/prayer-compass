@@ -3,7 +3,7 @@ import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import "expo-dev-client";
 import { useEffect, useState } from "react";
 import { grantPermissions } from "./utils/permissions";
-import mobileAds from "react-native-google-mobile-ads";
+import mobileAds, { MaxAdContentRating } from "react-native-google-mobile-ads";
 import BannerView from "./components/bannerView";
 import CompassView3 from "./components/compassView3";
 
@@ -14,7 +14,13 @@ export default function App() {
   useEffect(() => {
     (async () => {
       setHasPermissions(await grantPermissions());
-      await mobileAds().initialize();
+      await mobileAds()
+        .setRequestConfiguration({
+          maxAdContentRating: MaxAdContentRating.G,
+          tagForChildDirectedTreatment: false,
+          tagForUnderAgeOfConsent: false,
+        })
+        .initialize();
       setLoading(false);
     })();
   });
