@@ -14,13 +14,12 @@ export default function App() {
   useEffect(() => {
     (async () => {
       setHasPermissions(await grantPermissions());
-      await mobileAds()
-        .setRequestConfiguration({
-          maxAdContentRating: MaxAdContentRating.G,
-          tagForChildDirectedTreatment: false,
-          tagForUnderAgeOfConsent: false,
-        })
-        .initialize();
+      await mobileAds().setRequestConfiguration({
+        maxAdContentRating: MaxAdContentRating.G,
+        tagForChildDirectedTreatment: false,
+        tagForUnderAgeOfConsent: false,
+      });
+      await mobileAds().initialize();
       setLoading(false);
     })();
   });

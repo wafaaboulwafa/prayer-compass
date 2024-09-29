@@ -1,4 +1,5 @@
 eas build
+npx expo prebuild
 npx expo run:android
 eas build -p android --profile preview
 eas build -p android --profile production
