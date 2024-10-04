@@ -16,6 +16,7 @@ const PrayerTime = ({ titleEn, titleAr, value }) => {
     </View>
   );
 };
+
 const PrayersView = ({ location }) => {
   if (!location) return null;
   const today = new Date();
@@ -49,18 +50,20 @@ const PrayersView = ({ location }) => {
             titleAr={prayerTitles.sunrise.ar}
             value={prayerTimes.sunrise}
           />
+        </View>
+        <View style={styles.timesContainerLine}>
           <PrayerTime
             titleEn={prayerTitles.dhuhr.en}
             titleAr={prayerTitles.dhuhr.ar}
             value={prayerTimes.dhuhr}
           />
-        </View>
-        <View style={styles.timesContainerLine}>
           <PrayerTime
             titleEn={prayerTitles.asr.en}
             titleAr={prayerTitles.asr.ar}
             value={prayerTimes.asr}
           />
+        </View>
+        <View style={styles.timesContainerLine}>
           <PrayerTime
             titleEn={prayerTitles.maghrib.en}
             titleAr={prayerTitles.maghrib.ar}
@@ -86,25 +89,25 @@ const styles = StyleSheet.create({
   },
   timesContainer: {
     flex: 1,
-  },
-  date: {},
-  timeContainer: {
-    flex: 1,
-    flexDirection: "column",
-    marginHorizontal: 20,
+    paddingHorizontal: 30,
   },
   timesContainerLine: {
-    flexDirection: "row",
+    flexDirection: "row-reverse",
+    width: "100%",
   },
   timeInstance: {
-    height: 100,
-    width: 100,
+    flex: 1,
+    borderWidth: 1,
+    margin: 5,
+    flexDirection: "column",
   },
   timeInstanceTitle: {
-    flex: 1,
+    borderWidth: 1,
+    textAlign: "center",
   },
   timeInstanceValue: {
-    flex: 1,
+    borderWidth: 1,
+    textAlign: "center",
   },
 });
 
