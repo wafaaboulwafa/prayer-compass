@@ -1,13 +1,17 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, Text, Alert, TouchableOpacity } from "react-native";
 
 const NavBar = ({ style, pageIndex, setPageIndex }) => {
+  const goToPage = (index) => {
+    setPageIndex(index);
+  };
+
   return (
     <View style={[styles.container, style]}>
-      <TouchableOpacity onPress={() => setPageIndex(0)}>
+      <TouchableOpacity onPress={() => goToPage(0)}>
         <Text>Compass</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => setPageIndex(1)}>
+      <TouchableOpacity onPress={() => goToPage(1)}>
         <Text>Prayer Times</Text>
       </TouchableOpacity>
     </View>

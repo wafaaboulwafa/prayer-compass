@@ -1,5 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+} from "react-native";
 import "expo-dev-client";
 import { useEffect, useState } from "react";
 import { grantPermissions } from "./utils/permissions";
@@ -10,10 +16,12 @@ import NavBar from "./components/navBar";
 import PrayersView from "./components/prayersView";
 import * as Location from "expo-location";
 
+const backImage = require("./assets/background.jpg");
+
 export default function App() {
   const [hasPermissions, setHasPermissions] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [pageIndex, setPageIndex] = useState(1);
+  const [pageIndex, setPageIndex] = useState(0);
   const [location, setLocation] = useState(null);
 
   useEffect(() => {
@@ -37,27 +45,39 @@ export default function App() {
   const showCompass = hasPermissions && !loading;
   return (
     <View style={styles.container}>
-      <StatusBar style="dark" />
-      <NavBar
-        pageIndex={pageIndex}
-        setPageIndex={setPageIndex}
-        style={styles.navBar}
-      />
-      <View style={styles.compassContainer}>
-        {showCompass && pageIndex === 0 && <CompassView location={location} />}
-        {showCompass && pageIndex === 1 && <PrayersView location={location} />}
-        {!showCompass && !loading && (
-          <Text style={styles.warning}>
-            Please allow the required permissions to use the application
-          </Text>
-        )}
-        {loading && <ActivityIndicator size={"large"} color={"black"} />}
-      </View>
-      {showCompass && (
-        <View style={styles.adsContainer}>
-          <BannerView />
+      <ImageBackground
+        style={styles.background}
+        source={backImage}
+        resizeMode="cover"
+      >
+        <View style={styles.overlay}>
+          <StatusBar style="dark" />
+          <NavBar
+            pageIndex={pageIndex}
+            setPageIndex={setPageIndex}
+            style={styles.navBar}
+          />
+          <View style={styles.compassContainer}>
+            {showCompass && pageIndex === 0 && (
+              <CompassView location={location} />
+            )}
+            {showCompass && pageIndex === 1 && (
+              <PrayersView location={location} />
+            )}
+            {!showCompass && !loading && (
+              <Text style={styles.warning}>
+                Please allow the required permissions to use the application
+              </Text>
+            )}
+            {loading && <ActivityIndicator size={"large"} color={"black"} />}
+          </View>
+          {showCompass && (
+            <View style={styles.adsContainer}>
+              <BannerView />
+            </View>
+          )}
         </View>
-      )}
+      </ImageBackground>
     </View>
   );
 }
@@ -66,8 +86,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+  },
+  background: {
+    flex: 1,
+  },
+  overlay: {
+    flex: 1,
     alignContent: "center",
     justifyContent: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
   },
   navBar: { height: 80 },
   compassContainer: {
