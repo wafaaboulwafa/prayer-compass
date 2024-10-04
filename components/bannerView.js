@@ -22,7 +22,7 @@ const BannerView = () => {
         unitId={adUnitId}
         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
         requestOptions={{
-          requestNonPersonalizedAdsOnly: true,
+          requestNonPersonalizedAdsOnly: false,
           networkExtras: {
             collapsible: "bottom",
           },

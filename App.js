@@ -5,11 +5,16 @@ import { useEffect, useState } from "react";
 import { grantPermissions } from "./utils/permissions";
 import mobileAds, { MaxAdContentRating } from "react-native-google-mobile-ads";
 import BannerView from "./components/bannerView";
-import CompassView3 from "./components/compassView3";
+import CompassView from "./components/compassView";
+import NavBar from "./components/navBar";
+import PrayersView from "./components/prayersView";
+import * as Location from "expo-location";
 
 export default function App() {
   const [hasPermissions, setHasPermissions] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [pageIndex, setPageIndex] = useState(1);
+  const [location, setLocation] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -20,15 +25,27 @@ export default function App() {
         tagForUnderAgeOfConsent: false,
       });
       await mobileAds().initialize();
+      const loc = await Location.getCurrentPositionAsync({});
+      setLocation({
+        latitude: loc.coords.latitude,
+        longitude: loc.coords.longitude,
+      });
+
       setLoading(false);
     })();
-  });
+  }, []);
   const showCompass = hasPermissions && !loading;
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
+      <NavBar
+        pageIndex={pageIndex}
+        setPageIndex={setPageIndex}
+        style={styles.navBar}
+      />
       <View style={styles.compassContainer}>
-        {showCompass && <CompassView3 />}
+        {showCompass && pageIndex === 0 && <CompassView location={location} />}
+        {showCompass && pageIndex === 1 && <PrayersView location={location} />}
         {!showCompass && !loading && (
           <Text style={styles.warning}>
             Please allow the required permissions to use the application
@@ -52,6 +69,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
   },
+  navBar: { height: 80 },
   compassContainer: {
     flex: 10,
     alignContent: "center",
@@ -63,6 +81,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   adsContainer: {
-    flex: 2,
+    height: 80,
   },
 });
