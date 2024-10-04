@@ -23,21 +23,15 @@ const PrayersView = ({ location }) => {
   const params = CalculationMethod.UmmAlQura();
   const coordinates = new Coordinates(location.latitude, location.longitude);
   const prayerTimes = new PrayerTimes(coordinates, today, params);
-  const hijriDateEn = moment()
-    .locale("en-US")
-    .format("iYYYY / iMM - iMMMM / iDD");
-  const hijriDateAr = moment()
-    .locale("ar-SA")
-    .format("iYYYY / iMM - iMMMM / iDD");
+  const hijriDate = moment().format("iYYYY / iMM - iMMMM / iDD");
 
   const dayNameEn = today.toLocaleDateString("en-US", { weekday: "long" });
   const dayNameAr = today.toLocaleDateString("ar-SA", { weekday: "long" });
 
   return (
     <View style={styles.container}>
-      <Text style={styles.date}>{dayNameEn + " - " + dayNameAr}</Text>
-      <Text style={styles.date}>{hijriDateEn}</Text>
-      <Text style={styles.date}>{hijriDateAr}</Text>
+      <Text style={styles.dayName}>{dayNameEn + " - " + dayNameAr}</Text>
+      <Text style={styles.todayDate}>{hijriDate}</Text>
       <View style={styles.timesContainer}>
         <View style={styles.timesContainerLine}>
           <PrayerTime
@@ -91,22 +85,42 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 30,
   },
+  dayName: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: 5,
+  },
+  todayDate: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: 5,
+    marginBottom: 20,
+  },
   timesContainerLine: {
     flexDirection: "row-reverse",
     width: "100%",
   },
   timeInstance: {
     flex: 1,
-    borderWidth: 1,
     margin: 5,
     flexDirection: "column",
+    borderRadius: 10,
+    borderWidth: 1,
+    overflow: "hidden",
   },
   timeInstanceTitle: {
-    borderWidth: 1,
+    backgroundColor: "blue",
+    color: "white",
+    fontSize: 16,
     textAlign: "center",
+    padding: 5,
   },
   timeInstanceValue: {
-    borderWidth: 1,
+    padding: 5,
+    fontSize: 16,
+    fontWeight: "bold",
     textAlign: "center",
   },
 });

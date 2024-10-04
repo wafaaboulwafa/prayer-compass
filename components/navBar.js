@@ -1,5 +1,6 @@
 import React from "react";
-import { View, StyleSheet, Text, Alert, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import prayerTitles from "../constants/prayerTitles";
 
 const NavBar = ({ style, pageIndex, setPageIndex }) => {
   const goToPage = (index) => {
@@ -8,11 +9,39 @@ const NavBar = ({ style, pageIndex, setPageIndex }) => {
 
   return (
     <View style={[styles.container, style]}>
-      <TouchableOpacity onPress={() => goToPage(0)}>
-        <Text>Compass</Text>
+      <TouchableOpacity
+        style={[
+          styles.button,
+          styles.left,
+          pageIndex === 0 ? styles.active : null,
+        ]}
+        onPress={() => goToPage(0)}
+      >
+        <Text
+          style={[
+            styles.buttonText,
+            pageIndex === 0 ? styles.activeText : null,
+          ]}
+        >
+          {prayerTitles.compass}
+        </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => goToPage(1)}>
-        <Text>Prayer Times</Text>
+      <TouchableOpacity
+        style={[
+          styles.button,
+          styles.right,
+          pageIndex === 1 ? styles.active : null,
+        ]}
+        onPress={() => goToPage(1)}
+      >
+        <Text
+          style={[
+            styles.buttonText,
+            pageIndex === 1 ? styles.activeText : null,
+          ]}
+        >
+          {prayerTitles.times}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -20,11 +49,36 @@ const NavBar = ({ style, pageIndex, setPageIndex }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: "100%",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
+    marginTop: 70,
+    marginBottom: 70,
     flexDirection: "row",
+    marginHorizontal: 30,
+  },
+  button: {
+    backgroundColor: "#0101ae",
+    flex: 1,
+    padding: 15,
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
+    padding: 5,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  left: {
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+  },
+  right: {
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  active: {
+    backgroundColor: "#afafaf",
+  },
+  activeText: {
+    color: "#050505",
   },
 });
 

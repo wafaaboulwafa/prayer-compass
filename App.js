@@ -52,11 +52,7 @@ export default function App() {
       >
         <View style={styles.overlay}>
           <StatusBar style="dark" />
-          <NavBar
-            pageIndex={pageIndex}
-            setPageIndex={setPageIndex}
-            style={styles.navBar}
-          />
+          <NavBar pageIndex={pageIndex} setPageIndex={setPageIndex} />
           <View style={styles.compassContainer}>
             {showCompass && pageIndex === 0 && (
               <CompassView location={location} />
@@ -96,7 +92,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "rgba(255, 255, 255, 0.7)",
   },
-  navBar: { height: 80 },
   compassContainer: {
     flex: 10,
     alignContent: "center",

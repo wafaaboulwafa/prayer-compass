@@ -1,4 +1,8 @@
 export default {
+  compass: `اتجاه القبلة
+Prayer Compass`,
+  times: `مواقيت الصلاة
+  Prayer Times`,
   fajr: {
     en: "Fajr",
     ar: "الفجر",
@@ -13,7 +17,7 @@ export default {
   },
   asr: {
     en: "Asr",
-    ar: "العسر",
+    ar: "العصر",
   },
   maghrib: {
     en: "Maghrib",

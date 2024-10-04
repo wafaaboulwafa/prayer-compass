@@ -122,7 +122,7 @@ const smallestSize = Math.min(screenWidth, screenHeight);
 
 const compassWidth = Math.round(smallestSize * 0.5);
 const arrowWidth = Math.round(smallestSize * 1);
-const adsBannerShift = 90;
+const adsBannerShift = 170;
 
 const styles = StyleSheet.create({
   container: {
