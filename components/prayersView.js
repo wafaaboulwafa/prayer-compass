@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     padding: 5,
-    color: "#16325B",
+    color: "#FFDC7F",
   },
   todayDate: {
     fontSize: 20,
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 5,
     marginBottom: 20,
-    color: "#16325B",
+    color: "#FFDC7F",
   },
   timesContainerLine: {
     flexDirection: "row-reverse",
@@ -115,8 +115,9 @@ const styles = StyleSheet.create({
   },
   timeInstanceTitle: {
     backgroundColor: "#78B7D0",
-    color: "white",
+    color: "#16325B",
     fontSize: 16,
+    fontWeight: "bold",
     textAlign: "center",
     padding: 5,
   },
@@ -125,6 +126,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
+    color: "#FFDC7F",
   },
 });
 

@@ -9,7 +9,7 @@ import { calculateHeading, flipAngle, safeAngleValue } from "../utils/heading";
 import settings from "../constants/settings";
 
 const arrowImage = require("../assets/meccah-arrow.png");
-const compassImage = require("../assets/compass.png");
+const compassImage = require("../assets/compass-2.png");
 
 const CompassView = ({ location }) => {
   if (!location) return null;

@@ -16,7 +16,7 @@ import NavBar from "./components/navBar";
 import PrayersView from "./components/prayersView";
 import * as Location from "expo-location";
 
-const backImage = require("./assets/background.jpg");
+const backImage = require("./assets/background2.jpg");
 
 export default function App() {
   const [hasPermissions, setHasPermissions] = useState(false);
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center",
     justifyContent: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
   },
   compassContainer: {
     flex: 10,
