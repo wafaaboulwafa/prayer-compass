@@ -16,7 +16,7 @@ const PryaerTime = ({ titleEn, titleAr, value }) => {
 };
 const PrayersView = ({ location }) => {
   if (!location) return null;
-  const params = CalculationMethod.MoonsightingCommittee();
+  const params = CalculationMethod.UmmAlQura();
   const coordinates = new Coordinates(location.latitude, location.longitude);
   const prayerTimes = new PrayerTimes(coordinates, new Date(), params);
   const hijriDate = moment().format("iYYYY/iM/iD");
@@ -35,11 +35,6 @@ const PrayersView = ({ location }) => {
         value={prayerTimes.dhuhr}
       />
       <PryaerTime titleEn={"Asr"} titleAr={"العسر"} value={prayerTimes.asr} />
-      <PryaerTime
-        titleEn={"Sunset"}
-        titleAr={"الغروب"}
-        value={prayerTimes.sunset}
-      />
       <PryaerTime
         titleEn={"Maghrib"}
         titleAr={"المفرب"}
