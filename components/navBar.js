@@ -55,12 +55,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   button: {
-    backgroundColor: "#0101ae",
+    backgroundColor: "#16325B",
     flex: 1,
     padding: 15,
   },
   buttonText: {
-    color: "white",
+    color: "#FFDC7F",
     textAlign: "center",
     padding: 5,
     fontSize: 16,
@@ -75,10 +75,10 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
   },
   active: {
-    backgroundColor: "#afafaf",
+    backgroundColor: "#78B7D0",
   },
   activeText: {
-    color: "#050505",
+    color: "#16325B",
   },
 });
 
