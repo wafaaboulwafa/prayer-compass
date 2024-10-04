@@ -2,6 +2,7 @@ import React from "react";
 import { Coordinates, CalculationMethod, PrayerTimes } from "adhan";
 import { View, StyleSheet, Text } from "react-native";
 import moment from "moment-hijri";
+import prayerTitles from "../constants/prayerTitles";
 
 const PryaerTime = ({ titleEn, titleAr, value }) => {
   const options = { hour: "2-digit", minute: "2-digit", second: "2-digit" };
@@ -23,26 +24,34 @@ const PrayersView = ({ location }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.date}>{hijriDate}</Text>
-      <PryaerTime titleEn={"Fajr"} titleAr={"الفجر"} value={prayerTimes.fajr} />
       <PryaerTime
-        titleEn={"Sunrise"}
-        titleAr={"الشروق"}
+        titleEn={prayerTitles.fajr.en}
+        titleAr={prayerTitles.fajr.ar}
+        value={prayerTimes.fajr}
+      />
+      <PryaerTime
+        titleEn={prayerTitles.sunrise.en}
+        titleAr={prayerTitles.sunrise.ar}
         value={prayerTimes.sunrise}
       />
       <PryaerTime
-        titleEn={"Dhuhr"}
-        titleAr={"الظهر"}
+        titleEn={prayerTitles.dhuhr.en}
+        titleAr={prayerTitles.dhuhr.ar}
         value={prayerTimes.dhuhr}
       />
-      <PryaerTime titleEn={"Asr"} titleAr={"العسر"} value={prayerTimes.asr} />
       <PryaerTime
-        titleEn={"Maghrib"}
-        titleAr={"المفرب"}
+        titleEn={prayerTitles.asr.en}
+        titleAr={prayerTitles.asr.ar}
+        value={prayerTimes.asr}
+      />
+      <PryaerTime
+        titleEn={prayerTitles.maghrib.en}
+        titleAr={prayerTitles.maghrib.ar}
         value={prayerTimes.maghrib}
       />
       <PryaerTime
-        titleEn={"Isha"}
-        titleAr={"العشاء"}
+        titleEn={prayerTitles.isha.en}
+        titleAr={prayerTitles.isha.ar}
         value={prayerTimes.isha}
       />
     </View>
