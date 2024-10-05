@@ -15,14 +15,23 @@ import CompassView from "./components/compassView";
 import NavBar from "./components/navBar";
 import PrayersView from "./components/prayersView";
 import * as Location from "expo-location";
+import { getRandomNumberBetween } from "./utils/heading";
 
-const backImage = require("./assets/background2.jpg");
+const backImages = [
+  require("./assets/background-1.jpg"),
+  require("./assets/background-2.jpg"),
+  require("./assets/background-3.jpg"),
+  require("./assets/background-4.jpg"),
+  require("./assets/background-5.jpg"),
+  require("./assets/background-6.jpg"),
+];
 
 export default function App() {
   const [hasPermissions, setHasPermissions] = useState(false);
   const [loading, setLoading] = useState(true);
   const [pageIndex, setPageIndex] = useState(0);
   const [location, setLocation] = useState(null);
+  const imgSrc = backImages[getRandomNumberBetween(1, backImages.length - 1)];
 
   useEffect(() => {
     (async () => {
@@ -47,7 +56,7 @@ export default function App() {
     <View style={styles.container}>
       <ImageBackground
         style={styles.background}
-        source={backImage}
+        source={imgSrc}
         resizeMode="cover"
       >
         <View style={styles.overlay}>

@@ -29,3 +29,6 @@ export const flipAngle = (value) =>
 
 export const safeAngleValue = (value) =>
   value && value >= 0 && value < 360 ? value : 0;
+
+export const getRandomNumberBetween = (min, max) =>
+  Math.floor(Math.random() * max) + min;
