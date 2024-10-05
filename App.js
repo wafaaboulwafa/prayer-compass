@@ -31,7 +31,10 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [pageIndex, setPageIndex] = useState(0);
   const [location, setLocation] = useState(null);
-  const imgSrc = backImages[getRandomNumberBetween(1, backImages.length - 1)];
+  const [imgSrcIndex] = useState(
+    getRandomNumberBetween(1, backImages.length - 1)
+  );
+  const imgSrc = backImages[imgSrcIndex];
 
   useEffect(() => {
     (async () => {
@@ -60,7 +63,7 @@ export default function App() {
         resizeMode="cover"
       >
         <View style={styles.overlay}>
-          <StatusBar style="dark" />
+          <StatusBar style="auto" />
           <NavBar pageIndex={pageIndex} setPageIndex={setPageIndex} />
           <View style={styles.compassContainer}>
             {showCompass && pageIndex === 0 && (
