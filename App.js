@@ -65,7 +65,7 @@ export default function App() {
                 Please allow the required permissions to use the application
               </Text>
             )}
-            {loading && <ActivityIndicator size={"large"} color={"black"} />}
+            {loading && <ActivityIndicator size={"large"} color={"#F0B18E"} />}
           </View>
           {showCompass && (
             <View style={styles.adsContainer}>

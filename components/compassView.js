@@ -8,7 +8,7 @@ import * as Location from "expo-location";
 import { calculateHeading, flipAngle, safeAngleValue } from "../utils/heading";
 import settings from "../constants/settings";
 
-const arrowImage = require("../assets/meccah-arrow.png");
+const arrowImage = require("../assets/meccah-arrow-1.png");
 const compassImage = require("../assets/compass-2.png");
 
 const CompassView = ({ location }) => {
