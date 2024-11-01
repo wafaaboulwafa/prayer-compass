@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     marginBottom: 70,
     flexDirection: "row",
     marginHorizontal: 30,
-    zIndex: 1,
+    zIndex: 2,
   },
   button: {
     backgroundColor: "#16325B",
