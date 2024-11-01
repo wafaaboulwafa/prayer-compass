@@ -1,8 +1,9 @@
 import React from "react";
 import { Coordinates, CalculationMethod, PrayerTimes } from "adhan";
-import { View, StyleSheet, Text } from "react-native";
+import { View, ScrollView, StyleSheet, Text } from "react-native";
 import moment from "moment-hijri";
 import prayerTitles from "../constants/prayerTitles";
+import { responsiveFontSize } from "react-native-responsive-dimensions";
 
 const PrayerTime = ({ titleEn, titleAr, value }) => {
   const options = { hour: "2-digit", minute: "2-digit" };
@@ -29,7 +30,10 @@ const PrayersView = ({ location }) => {
   const dayNameAr = today.toLocaleDateString("ar-SA", { weekday: "long" });
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStle={styles.scrollContent}
+    >
       <Text style={styles.dayName}>{dayNameEn + " - " + dayNameAr}</Text>
       <Text style={styles.todayDate}>{hijriDate}</Text>
       <View style={styles.timesContainer}>
@@ -70,7 +74,7 @@ const PrayersView = ({ location }) => {
           />
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -78,6 +82,8 @@ const styles = StyleSheet.create({
   container: {
     height: "100%",
     width: "100%",
+  },
+  scrollContent: {
     justifyContent: "center",
     alignItems: "center",
   },
@@ -86,14 +92,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   dayName: {
-    fontSize: 20,
+    fontSize: responsiveFontSize(3),
     fontWeight: "bold",
     textAlign: "center",
     padding: 5,
     color: "#FFDC7F",
   },
   todayDate: {
-    fontSize: 20,
+    fontSize: responsiveFontSize(3),
     fontWeight: "bold",
     textAlign: "center",
     padding: 5,
@@ -116,14 +122,14 @@ const styles = StyleSheet.create({
   timeInstanceTitle: {
     backgroundColor: "#78B7D0",
     color: "#16325B",
-    fontSize: 16,
+    fontSize: responsiveFontSize(2),
     fontWeight: "bold",
     textAlign: "center",
     padding: 5,
   },
   timeInstanceValue: {
     padding: 5,
-    fontSize: 16,
+    fontSize: responsiveFontSize(2),
     fontWeight: "bold",
     textAlign: "center",
     color: "#FFDC7F",

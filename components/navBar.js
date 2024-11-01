@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import prayerTitles from "../constants/prayerTitles";
+import { responsiveFontSize } from "react-native-responsive-dimensions";
 
 const NavBar = ({ style, pageIndex, setPageIndex }) => {
   const goToPage = (index) => {
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
     marginBottom: 70,
     flexDirection: "row",
     marginHorizontal: 30,
+    zIndex: 1,
   },
   button: {
     backgroundColor: "#16325B",
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
     color: "#FFDC7F",
     textAlign: "center",
     padding: 5,
-    fontSize: 16,
+    fontSize: responsiveFontSize(2),
     fontWeight: "bold",
   },
   left: {

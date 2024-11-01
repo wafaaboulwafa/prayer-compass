@@ -21,7 +21,7 @@ Prayer Compass`,
   },
   maghrib: {
     en: "Maghrib",
-    ar: "المفرب",
+    ar: "المغرب",
   },
   isha: {
     en: "Isha",
